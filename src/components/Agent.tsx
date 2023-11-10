@@ -11,6 +11,9 @@ export const Agent = () => {
     
     return(
         <div style={backgroundStyle}>
+            <div>
+                HELLO
+            </div>
             <AgentCircle/>
         </div>
     )
