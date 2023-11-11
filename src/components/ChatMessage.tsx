@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
+import { Message } from "../types/Message";
 
 interface ChatMessageProps {
-    message: (message: string) => void;
+    message: (message: Message) => void;
 
 }
 
 
 export const ChatMessage = (props: ChatMessageProps) => {
-    const [message,setMessage] = useState<string>()
+    const [message,setMessage] = useState<Message>()
     const [disabledButton,setDisabledButton] = useState<boolean>()
 
     const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMessage(event.currentTarget.value);
+        setMessage({role:'user', message:event.currentTarget.value});
     }
 
     useEffect(()=>{
-        if(!message || message.length<2){
+        if(!message || message.message.length<2){
             setDisabledButton(true);
         }else{
             setDisabledButton(false);
