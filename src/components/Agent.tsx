@@ -4,38 +4,43 @@ import { ChatMessage } from "./ChatMessage";
 
 export const Agent = () => {
     const [messages, setMessages] = useState<string[]>([]);
-    useEffect(() =>{
+    
+    useEffect(() => {
         const handleSend = async () => {
             console.log("API CALL")
             try {
-              const response = await fetch('https://zen-steps.onrender.com/api/v1/openai', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ content: messages }),
-              });
-        
-              if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-              }
-        
-              const data = await response.json();
-              console.log('API response:', data);
+                const response = await fetch('https://zen-steps.onrender.com/api/v1/openai', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ content: messages[0] }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                console.log('API response:', data);
             } catch (error: any) {
-              console.error('Error sending API request:', error.message);
+                console.error('Error sending API request:', error.message);
             }
-          };
-          if(messages.length>0){
-            handleSend();  
-          }
-    },[messages])
+        };
+    
+        if (messages.length > 0) {
+            handleSend();
+            // Clear messages after sending
+            setMessages([]);
+        }
+    }, [messages]);
+    
     
 
-        const handleMessage = (message: string) => {
-            
-          setMessages((prevMessages) => [...prevMessages, message]);
-        };
+    const handleMessage = (message: string) => {
+        
+      setMessages((prevMessages) => [...prevMessages, message]);
+    };
 
     const backgroundStyle = {
         backgroundImage: "url('public/layered-waves-hakei.svg')",
