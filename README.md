@@ -1,9 +1,6 @@
 # Zen Steps
 
-```bash
-source REACT_APP_TEXT_API_URL = "https://zen-steps.onrender.com/api/v1/openai"
-source REACT_APP_SPEECH_API_URL = "https://zen-steps.onrender.com/api/v1/speech"
-```
+A meditation & mindfulness guide that aims to help the user overcome anxiety, addiction, pain or other problems the user might be facing.
 
 Backend written in the Rust language utilizing OpenAI APIs can be found here:
 
