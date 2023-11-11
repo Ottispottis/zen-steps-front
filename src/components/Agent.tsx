@@ -39,9 +39,7 @@ export const Agent = () => {
 
     useEffect(() => {
         const handleSend = async () => {
-            console.log("API CALL")
             setLoadingResponse(true);
-            console.log(conversation)
             try {
                 const response = await fetch(TEXT_GENERATION_URL, {
                     method: 'POST',
@@ -60,7 +58,6 @@ export const Agent = () => {
                 }
     
                 const data = await response.json();
-                console.log('API response:', data);
                 setConversation((prevMessages) => [...prevMessages, { role: 'assistant', content: data.content}]);
                 //setLoadingResponse(false);
                 makeSpeech(data.content)
@@ -114,8 +111,6 @@ export const Agent = () => {
     }
     
     const handleMessage = (message: Message) => {
-
-        console.log('here')
         setConversation((prevMessages) => [...prevMessages, message]);
         setSendPressed(true);
     };
@@ -135,11 +130,11 @@ export const Agent = () => {
             </div>
             }
             
-            <div className={`flex flex-col w-full items-center gap-2 overflow-x-auto scroll-auto h-fit h-max-[50%] ${conversation.length < 1 && 'hidden' }`}>
+            <div className={`flex flex-col w-full items-center gap-2 overflow-x-auto scroll-auto h-fit pb-1 pt-1 h-max-[50%] ${conversation.length < 1 && 'hidden' }`}>
             {conversation &&
                 conversation.map((message, index) =>
                   message.role === 'user' && (
-                    <div key={index} className="rounded grid grid-cols-1 bg-slate-800 sm:max-w-[41.666667%] max-w-[80%] min-h-[25%] max-h-[200%] text-left pl-3 pr-3 text-slate-400 content-center animate-fade">
+                    <div key={index} className="rounded grid grid-cols-1 bg-slate-800 sm:max-w-[41.666667%] max-w-[80%] min-h-[25%] max-h-[200%] text-left pl-3 pr-3 text-slate-400 content-center animate-fade shadow-[0_0px_5px_rgba(8,_112,_184,_0.7)] z-10">
                         <div className="flex flex-row gap-2">
                             <span className=" font-bold">{username}:</span>
                             <span>{message.content}</span>
