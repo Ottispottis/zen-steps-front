@@ -12,11 +12,11 @@ export const ChatMessage = (props: ChatMessageProps) => {
     const [disabledButton,setDisabledButton] = useState<boolean>()
 
     const textAreaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMessage({role:'user', message:event.currentTarget.value});
+        setMessage({role:'user', content:event.currentTarget.value});
     }
 
     useEffect(()=>{
-        if(!message || message.message.length<2){
+        if(!message || message.content.length<2){
             setDisabledButton(true);
         }else{
             setDisabledButton(false);

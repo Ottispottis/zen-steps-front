@@ -1,4 +1,4 @@
 export type Message = {
     role: string;
-    message: string;
+    content: string;
 }
