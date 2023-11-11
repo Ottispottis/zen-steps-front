@@ -126,7 +126,7 @@ export const Agent = () => {
             {loadingResponse && 
             <div className="flex flex-col text-slate-400 w-1/3 text-center animate-fadeSlow">
                 <span>{`Hold on tight ${username}.`}</span>
-                <span className=" inline-block">{`While you wait for your personal meditation session find a quiet place and focus on your breating`}</span>
+                <span className=" inline-block">{`While you wait for your personal meditation session. Find a quiet place and focus on your breathing.`}</span>
             </div>
             }
             
