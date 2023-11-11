@@ -55,6 +55,10 @@ body > #root > div {
   animation: pulse 3s linear infinite; /* Apply pulse animation only when isPulsating is true */
 }
 
+.send-btn:hover {
+  fill:aqua
+}
+
 @keyframes rotate_3922 {
   from {
     transform: translate(-50%, -50%) rotate(0deg);
