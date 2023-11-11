@@ -45,7 +45,6 @@ export const Agent = () => {
             try {
                 const response = await fetch(TEXT_GENERATION_URL, {
                     method: 'POST',
-                    //mode: 'no-cors',
                     headers: {
                         'Content-Type': 'application/json',
                         'Access-Control-Allow-Origin': '*'

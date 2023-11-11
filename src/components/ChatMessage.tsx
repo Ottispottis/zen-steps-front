@@ -36,7 +36,7 @@ export const ChatMessage = (props: ChatMessageProps) => {
     return(
         <div className="flex flex-row gap-1 rounded bg-slate-800 p-1 items-center flex-1 ">
             <textarea ref={textAreaRef} onChange={textAreaChange} placeholder={`What's on your mind ${props.username}`} className="text-slate-400 rounded bg-transparent border border-slate-700 outline-none flex-grow resize-none overflow-hidden sm:text-lg text-xs"></textarea>
-            <button onClick={handleSend} disabled={disabledButton} className={`rounded text-slate-400 hover:bg-slate-700 hover:bg-opacity-80 px-2 h-6 text-xs`}>
+            <button onClick={handleSend} disabled={disabledButton} className={`rounded text-slate-400 hover:bg-slate-700 hover:bg-opacity-80 px-2 h-full sm:text-base text-xs`}>
                 Send
             </button>
         </div>
