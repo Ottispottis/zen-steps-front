@@ -28,7 +28,7 @@ export const Username = (props: UsernameProps) => {
         
         <div className="flex flex-row gap-1 rounded bg-slate-800 p-1 items-center flex-1 ">
             <input ref={inputRef} onChange={handleUsernameChange} className="text-slate-400 rounded bg-transparent border border-slate-700 outline-none flex-grow resize-none overflow-hidden sm:text-lg text-xs" placeholder="Please type your name"></input>
-            <button className="rounded text-slate-400 hover:bg-slate-700 hover:bg-opacity-80 px-2 h-6 text-xs" onClick={handleNameSet}>Set your name</button>
+            <button className="rounded text-slate-400 hover:bg-slate-700 hover:bg-opacity-80 px-2 h-full text-xs" onClick={handleNameSet}>Set</button>
         </div>
     )
 }
