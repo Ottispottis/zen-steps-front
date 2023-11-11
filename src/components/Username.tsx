@@ -17,9 +17,9 @@ export const Username = (props: UsernameProps) => {
             props.username(username);
             
         }
-        if(inputRef.current){
-            inputRef.current.value = ''
-        }
+        //if(inputRef.current){
+        //    inputRef.current.value = ''
+        //}
         
     }
 
