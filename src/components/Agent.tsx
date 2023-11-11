@@ -2,17 +2,33 @@ import { useEffect, useState } from "react";
 import { AgentCircle } from "./AgentCircle"
 import { ChatMessage } from "./ChatMessage";
 import { Message } from "../types/Message";
+import { Username } from "./Username";
 
-const systemPrompt: Message = {
 
-    role: "system",
-    content: "You are a therapist giving a therapy session. Give me a 130 word inspirational meditation session about overcoming chronic pain. Only output the actual session without ambiance instructions, quotation marks or 'Certainly, here is a 130-word inspirational meditation session on overcoming chronic pain:'. Remember the key points for future reference."
-}
 
 export const Agent = () => {
-    const [conversation, setConversation] = useState<Message[]>([systemPrompt]);
+    
     const [loadingResponse, setLoadingResponse] = useState<boolean>(false);
     const [sendPressed, setSendPressed] = useState<boolean>(false);
+    const [systemContent, setSystemContent] = useState<string>('');
+    const [username, setUsername] = useState<string>()
+    const TEXT_GENERATION_URL = process.env.REACT_APP_TEXT_API_URL || '';
+    const SPEECH_GENERATION_URL = process.env.REACT_APP_SPEECH_API_URL || '';
+    const systemPrompt: Message = {
+
+        role: "system",
+        content: systemContent
+    }
+    const [conversation, setConversation] = useState<Message[]>([systemPrompt]);
+
+    const handleUsername = (username: string) => {
+        setUsername(username);
+    }
+
+    useEffect(() => {
+        const systemPromptString = `You are a therapist giving a therapy session to ${username}. Give me a 130-word inspirational meditation session about overcoming chronic pain or other issues. Only output the actual session without ambiance instructions, quotation marks or 'Certainly, here's a 130-word inspirational meditation session on overcoming chronic pain:'. End the session by asking the patient if they would like to continue with another session. NEVER answer  'As an AI language model' or anything similar to that. Just help the user with their meditation`
+        setSystemContent(systemPromptString);
+    },[username])
 
     useEffect(() => {
         const handleSend = async () => {
@@ -20,7 +36,7 @@ export const Agent = () => {
             setLoadingResponse(true);
             console.log(conversation)
             try {
-                const response = await fetch('http://192.168.159.231:3000/api/v1/openai', {
+                const response = await fetch(TEXT_GENERATION_URL, {
                     method: 'POST',
                     //mode: 'no-cors',
                     headers: {
@@ -38,11 +54,10 @@ export const Agent = () => {
                 }
     
                 const data = await response.json();
-                setLoadingResponse(false);
-                setSendPressed(false);
                 console.log('API response:', data);
                 setConversation((prevMessages) => [...prevMessages, { role: 'assistant', content: data.content}]);
-                //makeSpeech(data.content)
+                //setLoadingResponse(false);
+                makeSpeech(data.content)
             } catch (error: any) {
                 setSendPressed(false);
                 setLoadingResponse(false);
@@ -60,7 +75,7 @@ export const Agent = () => {
     const makeSpeech = async (content: string) => {
         const audio = new Audio();
         try {
-            const response = await fetch('http://192.168.159.231:3000/api/v1/speech', {
+            const response = await fetch(SPEECH_GENERATION_URL, {
                 method: 'POST',
                 //mode: 'no-cors',
                 headers: {
@@ -81,7 +96,8 @@ export const Agent = () => {
             const url = window.URL.createObjectURL(data)
             audio.src = url
             audio.play();
-            console.log(data);
+            setLoadingResponse(false);
+            setSendPressed(false);
             
         } catch (error: any) {
             setSendPressed(false);
@@ -111,24 +127,38 @@ export const Agent = () => {
                     <div className="cell d-0"></div>
                     <div className="cell d-1"></div>
                     <div className="cell d-2"></div>
-
                     <div className="cell d-1"></div>
                     <div className="cell d-2"></div>
-
-
                     <div className="cell d-2"></div>
                     <div className="cell d-3"></div>
-
-
                     <div className="cell d-3"></div>
                     <div className="cell d-4"></div>
                 </div>
             </div>
             }
-            <div className="flex w-6/12">
-                <ChatMessage message={handleMessage}/>
-            </div>
             
+            <div className="flex flex-col w-full items-center gap-2 overflow-x-auto scroll-auto h-1/4">
+            {conversation &&
+                conversation.map((message, index) =>
+                  message.role === 'user' && (
+                    <div key={index} className="rounded grid grid-cols-1 bg-slate-800 sm:max-w-[41.666667%] max-w-[80%] min-h-[25%] max-h-[200%] text-left pl-3 pr-3 text-slate-400 content-center">
+                        <div className="flex flex-row gap-2">
+                            <span className=" font-bold">User:</span>
+                            <span>{message.content}</span>
+                        </div>
+                    </div>
+                  ) 
+        
+                )
+                }
+            </div>
+            {!username ? 
+                <div className="flex w-6/12">
+                <Username username={handleUsername}/> </div> :
+                <div className="flex w-6/12">
+                    <ChatMessage message={handleMessage} username={username}/>
+                </div>
+            }
         </div>
     )
 }
