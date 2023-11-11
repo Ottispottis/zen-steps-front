@@ -55,9 +55,6 @@ body > #root > div {
   animation: pulse 3s linear infinite; /* Apply pulse animation only when isPulsating is true */
 }
 
-.send-btn:hover {
-  fill:aqua
-}
 
 @keyframes rotate_3922 {
   from {
@@ -86,5 +83,96 @@ body > #root > div {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+.loader {
+  --cell-size: 52px;
+  --cell-spacing: 1px;
+  --cells: 3;
+  --total-size: calc(var(--cells) * (var(--cell-size) + 2 * var(--cell-spacing)));
+  display: flex;
+  flex-wrap: wrap;
+  width: var(--total-size);
+  height: var(--total-size);
+}
+
+.cell {
+  flex: 0 0 var(--cell-size);
+  margin: var(--cell-spacing);
+  background-color: transparent;
+  box-sizing: border-box;
+  border-radius: 4px;
+  animation: 4s ripple ease infinite;
+}
+
+.cell.d-1 {
+  animation-delay: 100ms;
+}
+
+.cell.d-2 {
+  animation-delay: 200ms;
+}
+
+.cell.d-3 {
+  animation-delay: 300ms;
+}
+
+.cell.d-4 {
+  animation-delay: 400ms;
+}
+
+.cell:nth-child(1) {
+  --cell-color: rgb(17, 59, 89);
+}
+
+.cell:nth-child(2) {
+  --cell-color: rgb(16, 58, 87);
+}
+
+.cell:nth-child(3) {
+  --cell-color: rgb(21, 71, 106);
+}
+
+.cell:nth-child(4) {
+  --cell-color: rgb(22, 79, 121);
+}
+
+.cell:nth-child(5) {
+  --cell-color: rgb(25, 93, 141);
+}
+
+.cell:nth-child(6) {
+  --cell-color: rgb(29, 104, 157);
+}
+
+.cell:nth-child(7) {
+  --cell-color: rgb(33, 116, 176);
+}
+
+.cell:nth-child(8) {
+  --cell-color: rgb(41, 136, 205);
+}
+
+.cell:nth-child(9) {
+  --cell-color: rgb(40, 147, 224);
+}
+
+/*Animation*/
+@keyframes ripple {
+  0% {
+    background-color: transparent;
+  }
+
+  30% {
+    background-color: var(--cell-color);
+  }
+
+  60% {
+    background-color: transparent;
+  }
+
+  100% {
+    background-color: transparent;
   }
 }
